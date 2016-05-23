@@ -154,8 +154,19 @@ df1038c HEAD@{9}: checkout: moving from master to m2  ...
 从远程拉后,也会使本地与缓存冲突
 
 
+
+
+
 # 整体规划
 一层外壳wrap
 
 * 灵活使用npm/git
+
+### 私有化
+还要解决国内与github通信慢的问题
+
+http://weizhifeng.net/git-with-dropbox.html
+之前一前git clone远程,而这里则利用了 git clone 一个本地地址达到效果
+
+
 
