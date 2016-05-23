@@ -197,7 +197,7 @@ git push -u yun master  //将pro项目的master分支,推送到yun.git
 git clone pro E:/myYun/yun.git //pro是项目名,随便填,也是生成的文件夹名
 跟拷贝github库一样,之后就是commit ,pull,push这些了
 
-* 第五步,分布到多个远程仓库
+* 第五步,发布到多个远程仓库
 git remote add origin git@github.com:dingdong-io/io-wrap.git  //如果原来就是拷自github,就无需这步
 $ git remote -v
 origin  git@github.com:dingdong-io/io-wrap.git (fetch)
