@@ -168,5 +168,26 @@ df1038c HEAD@{9}: checkout: moving from master to m2  ...
 http://weizhifeng.net/git-with-dropbox.html
 之前一前git clone远程,而这里则利用了 git clone 一个本地地址达到效果
 
+* 第一步,本地化+服务端化
+在已经正常使用git的本地,服务端化无比简单
+建立一个空目录 yun.git,在该目录内
+git init --bare
+是的,比平时客户端做法仅差了个参数--bare.
+看看都做了什么,.git的文件都搬到了根目录下,并且没有任何关于当前Commmit的内容文件,想想释然,服务器才不管展示文件给人看,它只管记录所有修改的历史即可.
+
+我们的目的这样已经够用了,网上有许多搭建服务器的看似复杂,是因为实现了更多功能:永远在线,ssh验证等.
+
+* 第二步,原项目push到它
+去原项目pro的目录下,
+git remote remove origin //删除原项目跟踪的远程仓库,通常是github,用git remote -v查看
+git remote add yun E:/myYun/yun.git  //新增远程仓库,注意反斜杠不可 yun是给这个远程库起的别名name,如果用惯了origin就用origin呗
+git push -u yun master  //将pro项目的master分支,推送到yun.git
+
+这时去看yun.git文件夹,其objects文件夹修改时间变化了,说明里面内容有变,已经成功,以后直接用'git push'命令即可
+
+* 第三步,云化+网盘功能
+本地化后,已经可以达到高深的功能
+
+
 
 
