@@ -1,6 +1,7 @@
-[submodule "io-test"]
-	path = io-test
-	url = git@github.com:dingdong-io/io-test.git
+
 [submodule "child/io-test"]
 	path = child/io-test
 	url = git@github.com:dingdong-io/io-test.git
+[submodule "child/new"]
+	path = child/new
+	url = git@github.com:dingdong-io/io-build.git

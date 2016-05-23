@@ -6,6 +6,10 @@ add后,修改再/commit报错,需要重新add
 
 只提交n.txt,git有修改不提供可否
 
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+$ git config --global core.editor emacs
+$ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 
 # 远程
@@ -81,6 +85,12 @@ $ git branch
 * (HEAD detached from 17768f5) //这个状态不合理
   m2
   master
+  
+  
+# 子模块
+git submodule add  git@github.com:dingdong-io/io-build.git [new]
+可以到任意子文件夹下添加子模块,默认io-build建立同名文件夹,指定名字后将建立new文件夹.
+
 
 
 
