@@ -91,6 +91,40 @@ $ git branch
 git submodule add  git@github.com:dingdong-io/io-build.git [new]
 可以到任意子文件夹下添加子模块,默认io-build建立同名文件夹,指定名字后将建立new文件夹.
 
+git submodule 查看所有子模块名及他们的指针
+git submodule init //初次clone一个父模块时,init一下,关联初始化 或者pull时发现远程新增了某子模块
+git submodule update //更新,不推荐这样的方式 它适用于子项目保持某个版本,而不是最新的场景
+
+通过commit时的修改,可以看到本地的父模块,对子模块整个文件夹的认识,为一个commit指针
+Subproject commit 0c1bfbcaaf7e39a1a6ec59bcee33f28aba938ace	
+Subproject commit 076222f69c8963064c2cdcde079125e08486cf44
+而github...
+
+
+与各自维护不同,子模块下没有.git文件夹,但有个.git文件,极小.标记了他在父模块.git中的位置,而事实上子项目更新时会从父中拿到自己的(有一种情况,先clone一个模块,然后手动添加给他的父,不在此列).git更新到github上 
+
+node_modules 在node项目中建议加入.gitignore,所以子项目放里面是不合理的.
+
+### 协作
+子模块更新后,父模块的child文件夹会发生改变(就是指针的改变),这时若只提交子,另一台电脑在父模块下git submodule update无效,但子中git pull会更新(这点与独立项目相同)
+因此,可以减少父的提交
+如果要用git submodule update来所有子更新(不推荐),需要的步骤是:更新子-更新父 - 另一台电脑更新父 -另一台电脑更新子
+
+
+### 批量子模块的操作
+git submodule foreach
+由于常遇到HEAD不在master的问题(操作子模块常见的报错:You are not currently on a branch ,并且任何一个子模块出错会打断后续的批量操作),以下几条命令特别好用.
+git submodule foreach git branch //查看是否在master上
+git submodule foreach git checkout master //全部切到master上 ,这意味着子模块尽量不要搞各种分支
+git submodule foreach git pull  
+git submodule foreach git push 
+
+特别要提一下,git submodule foreach git pull/push  ,适用于所有子模块保持最新版,我推荐这种方式.随时修改,上传,拉取.它可以与单个子模块的git pull ,git push良好合作,但一旦用git submodule update(不推荐的方式),所有的HEAD会被切到父模块记录的各子的commit id上,又得手动去checkout master.
+
+### 子模块总结
+不论从协作,还是批量子模块角度,都推荐对子模块分别操作,批量时用git submodule foreach.
+永远不要使用git submodule update(除非需求上,不希望子模块最新),如果用了,用git submodule foreach git checkout master 补救
+
 
 
 
@@ -107,7 +141,6 @@ df1038c HEAD@{9}: checkout: moving from master to m2  ...
 
 那么,推测,是不是就是缓存与本地冲突时,禁止commit,
 从远程拉后,也会使本地与缓存冲突
-
 
 
 
