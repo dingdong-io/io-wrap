@@ -175,18 +175,53 @@ git init --bare
 是的,比平时客户端做法仅差了个参数--bare.
 看看都做了什么,.git的文件都搬到了根目录下,并且没有任何关于当前Commmit的内容文件,想想释然,服务器才不管展示文件给人看,它只管记录所有修改的历史即可.
 
-我们的目的这样已经够用了,网上有许多搭建服务器的看似复杂,是因为实现了更多功能:永远在线,ssh验证等.
+我们的目的这样已经够用了,网上有许多搭建服务器的看似复杂,是因为实现了更多功能:永远在线,提供ssh协议等.
 
 * 第二步,原项目push到它
 去原项目pro的目录下,
-git remote remove origin //删除原项目跟踪的远程仓库,通常是github,用git remote -v查看
 git remote add yun E:/myYun/yun.git  //新增远程仓库,注意反斜杠不可 yun是给这个远程库起的别名name,如果用惯了origin就用origin呗
 git push -u yun master  //将pro项目的master分支,推送到yun.git
 
 这时去看yun.git文件夹,其objects文件夹修改时间变化了,说明里面内容有变,已经成功,以后直接用'git push'命令即可
 
 * 第三步,云化+网盘功能
-本地化后,已经可以达到高深的功能
+本地化后,库就在本地,自然快了不少.但我们希望像github那样,它是全球同步的,我电脑挂了也没事.于是配合了网盘.其实只要在第一步选择一个空目录时,将它建在网盘中即可.
+在公司与家两个地点,就靠网盘的自动同步,当然记得每次做完事push一次,并等待网盘同步完再关机.(我过去直接用网盘同步代码,切分支对网盘来说就是大量的文件修改,动不动就生成冲突的文件,但服务端的git只有文件的修改和各种指针信息,好多了)
+选择网盘上,要注意网盘的功能.有文件夹分享吗?可以用来在任意机器上不登录获取代码.可以设查看和编辑权吗?可以用来团队协作和仅供查看.可以指定朋友可见吗?保护隐私.
+这些算彩蛋吧,自己捣腾的话不用管这些啦.遗憾的是,国内大牌中唯一提供协作且免费的快盘要停止个人服务了,选哪家大家自己看吧.
+
+* 第四步,开源化
+其实就是利用网盘的分享链接和协作之类的,但是操作要说一下,因为自己上新电脑也得这么做
+先同步网盘,就有了yun.git文件夹
+在网盘之外找个文件夹
+git clone pro E:/myYun/yun.git //pro是项目名,随便填,也是生成的文件夹名
+跟拷贝github库一样,之后就是commit ,pull,push这些了
+
+* 第五步,分布到多个远程仓库
+git remote add origin git@github.com:dingdong-io/io-wrap.git  //如果原来就是拷自github,就无需这步
+$ git remote -v
+origin  git@github.com:dingdong-io/io-wrap.git (fetch)
+origin  git@github.com:dingdong-io/io-wrap.git (push)
+yun     E:/code/OneDrive/git2 (fetch)
+yun     E:/code/OneDrive/git2 (push)
+虽然有了两个对比库,但当下只会跟一个交互
+ git branch -vv //是vv,查看各分支跟踪的远程仓库
+master 614ab85 [yun/master] commitsometext  //说明当下是与yun交互
+
+我的建议是,绝大多数的时间,都提交到本地库,用网盘同步,累计了版本级的变化时,再提交到github一次
+git push -u origin master  //这一次是提交到origin
+git push -u yun master  //马上切回yun,用git branch -vv可查看生效否 
+平时,就是git push.除了push有-u,branch也可设置
+git branch -u yun/master master  //既然是设分支,远程就得精确到分支
+
+
+
+
+* 总结
+客户端的用法(第二步或第四步)在前面git理论中早学会了的,就是地址改成本地而己,只有第一步是必须的,所以是非常简单的.
+
+
+
 
 
 
