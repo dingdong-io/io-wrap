@@ -105,6 +105,17 @@ Subproject commit 076222f69c8963064c2cdcde079125e08486cf44
 
 node_modules 在node项目中建议加入.gitignore,所以子项目放里面是不合理的.
 
+### 删除
+略复杂
+* git rm --cached child/io-test/ //删除,这一步并不会在工作区进行物理删除
+* 修改.gitmodules文件
+[submodule "child/io-test"]
+	path = child/io-test
+	url = git@github.com:dingdong-io/io-test.git
+  这时`$ git submodule`,可以看到不再包含io-test子模块.
+* 如果不再父模块不再需要它,手动删除该目录 (否则将作为父模块的新文件夹被监听)
+
+
 ### 协作
 子模块更新后,父模块的child文件夹会发生改变(就是指针的改变),这时若只提交子,另一台电脑在父模块下git submodule update无效,但子中git pull会更新(这点与独立项目相同)
 因此,可以减少父的提交
@@ -143,4 +154,8 @@ df1038c HEAD@{9}: checkout: moving from master to m2  ...
 从远程拉后,也会使本地与缓存冲突
 
 
+# 整体规划
+一层外壳wrap
+
+* 灵活使用npm/git
 
