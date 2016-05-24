@@ -117,6 +117,7 @@ node_modules 在node项目中建议加入.gitignore,所以子项目放里面是�
 [submodule "io-build"]
 	url = git@github.com:dingdong-io/io-wrap.git/io-build
 * 如果不再父模块不再需要它,手动删除该目录 (否则将作为父模块的新文件夹被监听)
+* 过程中使用git-submodule查看总是报错,需要commit后查看
 
 
 ### 协作
