@@ -108,11 +108,14 @@ node_modules 在node项目中建议加入.gitignore,所以子项目放里面是�
 ### 删除
 略复杂
 * git rm --cached child/io-test/ //删除,这一步并不会在工作区进行物理删除
-* 修改.gitmodules文件
+* 手动修改.gitmodules文件
 [submodule "child/io-test"]
 	path = child/io-test
 	url = git@github.com:dingdong-io/io-test.git
-  这时`$ git submodule`,可以看到不再包含io-test子模块.
+* 手动修改.git/config
+与.gitmodules一样有子模块信息,删之
+[submodule "io-build"]
+	url = git@github.com:dingdong-io/io-wrap.git/io-build
 * 如果不再父模块不再需要它,手动删除该目录 (否则将作为父模块的新文件夹被监听)
 
 
